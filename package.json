@@ -1,0 +1,87 @@
+{
+  "name": "mapapp-db",
+  "version": "0.4.0",
+  "description": "MapApp DB Maintenance",
+  "author": "Chris Wade <genghishack@gmail.com>",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/genghishack/mapapp-db.git"
+  },
+  "bugs": {
+    "url": "https://github.com/genghishack/mapapp-db/issues"
+  },
+  "homepage": "https://github.com/genghishack/mapapp-db#readme",
+  "license": "GPL-3.0-or-later",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf dist && tsc",
+    "watch": "rf -rf dist && tsc --watch",
+    "migrate": "npm run build && node dist/migrate/migrate.js",
+    "etl": "npm run build && node dist/etl.js",
+    "csv": "npm run build && node dist/readCSV.js"
+  },
+  "devDependencies": {
+    "@terraformer/arcgis": "^2.1.0",
+    "@types/dateformat": "^5.0.0",
+    "@types/node": "^16.11.17",
+    "@types/pg": "^8.6.3",
+    "@types/terraformer__arcgis": "^2.0.2",
+    "@types/webpack-node-externals": "^2.5.3",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-source-map-support": "^1.0.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "eslint": "^5.4.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-import-resolver-typescript": "^1.1.1",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.28.0",
+    "jest": "^21.2.1",
+    "serverless-dotenv-plugin": "^3.11.1",
+    "serverless-offline": "^6.9.0",
+    "serverless-webpack": "^5.6.0",
+    "source-map-loader": "^3.0.0",
+    "typescript": "^3.9.10",
+    "webpack": "^4.44.2",
+    "webpack-node-externals": "^2.5.2"
+  },
+  "babel": {
+    "plugins": [
+      "transform-runtime"
+    ],
+    "presets": [
+      [
+        "env",
+        {
+          "node": "8.10"
+        }
+      ],
+      "stage-3",
+      "es2015"
+    ],
+    "sourceMaps": true,
+    "retainLines": true
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1048.0",
+    "axios": "^0.24.0",
+    "babel-runtime": "^6.26.0",
+    "basic-ftp": "^4.6.6",
+    "csv-parser": "^3.0.0",
+    "dateformat": "^5.0.2",
+    "dotenv": "^8.6.0",
+    "execa": "^6.0.0",
+    "extract-zip": "^2.0.1",
+    "nconf": "^0.10.0",
+    "pg": "^8.7.1"
+  }
+}
