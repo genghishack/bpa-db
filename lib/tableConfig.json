@@ -1,0 +1,14 @@
+{
+  "migrate": {
+    "main": "db_migrate"
+  },
+  "populate": {
+    "main": "db_populate"
+  },
+  "gisResource": {
+    "main": "gis_resource"
+  },
+  "user": {
+    "main": "app_user"
+  }
+}
