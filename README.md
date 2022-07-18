@@ -1,4 +1,4 @@
-cc# mapapp-db
+# bpa-db
 
 [Link to instructions for creating a public-ly accessible Postgres RDS instance in AWS.  These are incomplete.]
 
