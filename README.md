@@ -1,5 +1,7 @@
 # bpa-db
 
+REQUIRED: node 14+
+
 [Link to instructions for creating a public-ly accessible Postgres RDS instance in AWS.  These are incomplete.]
 
 1. Go to VPC dashboard.  Click VPCs.  Click Create VPC.

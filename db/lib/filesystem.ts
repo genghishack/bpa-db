@@ -12,7 +12,7 @@ export const getLogDir = async (module: string = '') => {
 }
 
 export const getTmpDir = async (module: string = '') => {
-  let tmpDir = `${process.env.TMP_PATH}`;
+  let tmpDir = `${process.env.DATA_PATH}`;
   if (module !== '') {
     tmpDir += `/${module}`;
   }
