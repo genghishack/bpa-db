@@ -1,39 +1,39 @@
-import {execa, execaCommand, execaCommandSync} from "execa";
+import execa from "execa";
 import fs from "fs";
-import {LoaderOptions} from "../types/etl.js";
-import {getTmpDir, nullFn} from "./filesystem.js";
-import {logDebug} from "./logging.js";
+import {getTmpDir, nullFn} from "../db/lib/filesystem.js";
 
-export const getHtml = async (url: string) => {
+export const getHtml = async (
+  url: string,
+  log: any
+) => {
   try {
-    const {stdout} = await execaCommand(`wget ${url} -O -`, {shell: true});
-    // logDebug(stdout);
+    const {stdout} = await execa.command(`wget ${url} -O -`, {shell: true});
+    // log.debug(stdout);
     return stdout;
   } catch (e) {
     return Promise.reject(e);
   }
 }
 
-export const getFile = async (
+export const wgetFile = async (
   fileName: string,
   baseUrl: string,
   subDir: string|null = null,
-  opts: LoaderOptions
 ) => {
-  const tmpDir = await getTmpDir(opts.module);
+  const tmpDir = await getTmpDir(loaderOpts.module);
   const url = subDir? `${baseUrl}/${subDir}/${fileName}` : `${baseUrl}/${fileName}`;
   const targetDir = subDir ? `${tmpDir}/${subDir}` : tmpDir;
   if (subDir) {
     fs.mkdir(targetDir, {recursive: true}, nullFn);
   }
-  // logDebug({url});
+  // log.debug({url});
   const sCmd = [
     `wget ${url}`,
     `-O ${targetDir}/${fileName}`
   ].join(' ');
 
   try {
-    const {stdout} = await execaCommandSync(sCmd, {shell: true});
+    const {stdout} = await execa.commandSync(sCmd, {shell: true});
     return stdout;
   } catch (e) {
     return Promise.reject(e);
@@ -44,15 +44,14 @@ export const getFiles = async (
   fileNames: {name: string}[],
   baseUrl: string,
   subDir: string|null = null,
-  opts: LoaderOptions
 ) => {
   try {
     await fileNames.reduce(
       (p: Promise<any>, fileObj) => p.then(async () => {
         const fileName = fileObj.name;
-        logDebug(`Downloading ${fileName}...`);
-        const stdout = await getFile(fileName, baseUrl, subDir, opts);
-        logDebug(stdout);
+        log.info(`Downloading ${fileName}...`);
+        const stdout = await wgetFile(fileName, baseUrl, subDir);
+        log.debug(stdout);
       }),
       (async () => {
         return Promise.resolve(null);

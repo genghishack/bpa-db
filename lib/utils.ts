@@ -1,30 +1,48 @@
-export const capitalizeAndCompressString = (string: string) => {
+export const capitalizeAndCompressString = (
+  string: string,
+) => {
   const rString = string.split(" ");
-  const rStringCap = rString.map((s) => {
+  const rStringCap = rString.map((s: string) => {
     return s.charAt(0).toUpperCase() + s.slice(1);
   })
   const compressedString = rStringCap.join('');
-  // logDebug({compressedString});
+  // log.debug({compressedString});
   return compressedString
 }
 
-export const capitalizeAndUnderscoreString = (string: string) => {
+export const capitalizeStringWithUrlEntities = (
+  string: string,
+) => {
   const rString = string.split(" ");
-  const rStringCap = rString.map((s) => {
+  const rStringCap = rString.map((s: string) => {
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  })
+  const convertedString = rStringCap.join('%20');
+  // log.debug({convertedString});
+  return convertedString
+}
+
+export const capitalizeAndUnderscoreString = (
+  string: string,
+) => {
+  const rString = string.split(" ");
+  const rStringCap = rString.map((s: string) => {
     return s.charAt(0).toUpperCase() + s.slice(1);
   })
   const underscoredString = rStringCap.join('_');
-  // logDebug({underscoredString});
+  // log.debug({underscoredString});
   return underscoredString
 }
 
-export const uppercaseAndCompressString = (string: string) => {
+export const uppercaseAndCompressString = (
+  string: string,
+) => {
   const rString = string.split(" ");
-  const rStringUpper = rString.map((s) => {
+  const rStringUpper = rString.map((s: string) => {
     return s.toUpperCase();
   })
   const compressedString = rStringUpper.join('');
-  // logDebug({compressedString});
+  // log.debug({compressedString});
   return compressedString
 }
 
@@ -39,8 +57,10 @@ export const getQueryStr = (params: any) => {
   return queryArr.join('&');
 }
 
-export const showTimeStamp = () => {
-  console.log('\n|--------------------------------------------------------------|');
-  console.log('|- ' + Date() + ' -|');
-  console.log('|--------------------------------------------------------------|\n');
+export const getDateStamp = () => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return [year, month, day].join('');
 }

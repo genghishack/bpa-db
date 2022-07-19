@@ -1,23 +1,21 @@
+import {StateInfo} from "./general.js";
+
 export type EtlStages = {
-  resetDirs: boolean;
   getFilesFromSource?: boolean;
   unzipFiles?: boolean;
   getFileNamesFromTmpDir?: boolean;
   resetStagingSchema: boolean;
   loadToStaging: boolean;
   registerLayerInstance: boolean;
-  loadMetaData: boolean;
   loadToData: boolean;
-  validateGeometries?: boolean;
 }
 
 export type UserOptions = {
   module: string;
   state: string;
   layer?: string;
-  offset?: number;
-  validate: boolean;
   force: boolean;
+  mock: boolean;
 }
 
 export type LoaderOptions = {
@@ -36,15 +34,8 @@ export type LoaderOptions = {
     url: string;
     path: string|string[];
   }
-  state: {
-    abbrev: string;
-    name: string;
-    fips: string;
-  }
+  state: StateInfo
 }
-
-export type FileObj = {name: string};
-export type FileObjList = FileObj[];
 
 export type SubLayer = {
   prefix: string;
@@ -57,6 +48,7 @@ export type Layer = {
   name: string;
   pk: string;
   table: string;
+  stagingTable: string;
   parentTable: string;
   dir?: string;
   index?: number;
@@ -64,7 +56,6 @@ export type Layer = {
   type?: string;
   subLayer?: SubLayer[]
   geomType?: string;
-  county?: string;
 }
 
 export type LayerOptions =
@@ -97,4 +88,7 @@ export type PgColumnObjType = {
   quote: boolean;
 }
 
-export type idObj = { id: string | number }
+export type idxObj = {
+  name: string;
+  index: number;
+}

@@ -1,12 +1,11 @@
 import pg from 'pg';
-import {logDebug, logError} from './logging.js';
 
 export const getPGConnectionStr = () => {
   const {PGHOST, PGPORT, PGDATABASE, PGUSER, PGPASSWORD} = process.env;
   //@ts-ignore
   const encodedPasswd = encodeURIComponent(PGPASSWORD);
   const pgConnStr = `postgres://${PGUSER}:${encodedPasswd}@${PGHOST}:${PGPORT}/${PGDATABASE}`;
-  // logDebug({pgConnStr});
+  // log.debug({pgConnStr});
   return pgConnStr;
 }
 
@@ -27,16 +26,17 @@ const getPgClient = async () => {
 
 export const pgQuery = async (
   sql: string,
-  parameters:string[] = [],
+  parameters: string[] = [],
   sqlLabel: string,
   debug: boolean = false
 ) => {
+  // log.debug({sql, parameters, sqlLabel})
   if (!sql) {
     return Promise.reject(new Error('No SQL provided for query'));
   }
   const label = (sqlLabel) ? `SQL query: ${sqlLabel}` : 'SQL query';
-  logDebug(label);
-  if (debug) logDebug({sql, parameters});
+  log.debug(label);
+  if (debug) log.debug({sql, parameters});
 
   let pgClient = {
     connect: () => {},
@@ -48,10 +48,10 @@ export const pgQuery = async (
     pgClient = await getPgClient();
     pgClient.connect();
     const result = await pgClient.query(sql, parameters);
-    // logDebug({result});
+    // log.debug({result});
     return result.rows;
   } catch (e) {
-    logError(e);
+    log.error(e);
     return Promise.reject(e);
   } finally {
     pgClient.end();
@@ -59,7 +59,7 @@ export const pgQuery = async (
 };
 
 export const pgCleanString = (string: string) => {
-  // console.log({string})
+  // log.info({string: string})
   return string ? string.replace(/'/g, "''") : null;
 }
 

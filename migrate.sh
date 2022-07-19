@@ -9,8 +9,8 @@ do
   case "${flag}" in
     m) module="-m ${OPTARG}";;
     s) start="-s ${OPTARG}";;
-    e) end="-e ${OPTARG}";;
+    e) exact="-e ${OPTARG}";;
     c) clear="-c";;
   esac
 done
-npm run migrate -- $module $start $end $clear;
+npm run migrate -- $module $start $exact $clear | bunyan;

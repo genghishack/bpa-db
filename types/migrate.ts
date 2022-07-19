@@ -4,11 +4,11 @@ export type Migration = {
   sql: string;
 }
 
-export type UserOptions = {
+export type MigrateUserOptions = {
   module: string|null;
   clear: boolean;
   start: number|null;
-  end: number|null;
+  exact: number|null;
 }
 
 export type LayerSchemaOptions = {
@@ -16,6 +16,7 @@ export type LayerSchemaOptions = {
   web_root: string;
   ftp_root: string;
   base_path: string;
+  steward?: string;
 }
 
 type GeomType = 'point' | 'polygon' | 'multipolygon' | 'multilinestring';
@@ -26,6 +27,7 @@ export type LayerTableOptions = {
   tableName: string;
   layerName: string;
   layerDesc: string;
+  parentTable?: string;
   pk: 'id';
   uidx: string[];
   level: {

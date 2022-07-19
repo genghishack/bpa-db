@@ -1,11 +1,10 @@
 import ftp from "basic-ftp";
-import {getTmpDir} from "./filesystem.js";
-import {logDebug} from "./logging.js";
-import {LayerOptions} from "../types/etl.js";
+import {getTmpDir} from "../db/lib/filesystem.js";
+import {LayerOptions} from "../types/etl";
 
 export const getFileFromFTP = async (
   fileName: string,
-  opts: LayerOptions
+  opts: LayerOptions,
 ) => {
   const client = new ftp.Client();
   const tmpDir = await getTmpDir(opts.module);
@@ -20,12 +19,12 @@ export const getFileFromFTP = async (
 
 export const getFilesWithFTP = async (
   fileNames: {name: string}[],
-  opts: LayerOptions
+  opts: LayerOptions,
 ) => {
   try {
     await Promise.all(fileNames.map(async (fileObj: {name: string}) => {
       const fileName = fileObj.name;
-      logDebug(`Downloading ${fileName}...`);
+      log.debug(`Downloading ${fileName}...`);
       await getFileFromFTP(fileName, opts);
     }))
   } catch (e) {
@@ -33,45 +32,20 @@ export const getFilesWithFTP = async (
   }
 }
 
-// deprecated
-export const chooseFTPDirNames = async (
-  host: string,
-  dir: string,
-  filter: any[] = []
-) => {
-  logDebug(`Choosing FTP directory names from ${host}${dir}`);
-  try {
-    const allDirNames = await listDirNamesFromFTPDir(host, dir);
-    // logDebug({allDirNames});
-    if (!filter.length) return allDirNames;
-
-    logDebug('Filtering directory names...');
-    const filteredDirNames = allDirNames.filter(dirObj => {
-      const dirName = dirObj.name;
-      // @ts-ignore
-      return filter.includes(dirName);
-    })
-    // logDebug({filteredDirNames});
-    return filteredDirNames;
-  } catch (e) {
-    return Promise.reject(e);
-  }
-}
-
 export const filterFilesFromFTPDir = async (
   contains: string,
-  opts: LayerOptions
+  opts: LayerOptions,
 ) => {
-  console.log(`Filtering ${opts.layer.name} filenames from FTP Directory...`);
+  log.info(`Filtering ${opts.layer.name} filenames from FTP Directory...`);
   try {
     const fileList = await listFilesFromFTPDir(opts.source.ftp, opts.layer.dir!);
-    // logDebug({fileList});
+    // log.debug({fileList});
     const fileNames = fileList.filter(fileObj => {
       return fileObj.name.indexOf(contains) !== -1
     })
-    // logDebug({dir, fileNames});
+    // log.debug({dir, fileNames});
     if (!fileNames.length) {
-      console.log(`
+      log.info(`
         No files found in FTP dir for ${opts.layer.name}
         layer for FIPS ${opts.state.fips}
         (${opts.state.abbrev.toUpperCase()}).
@@ -85,9 +59,9 @@ export const filterFilesFromFTPDir = async (
 
 export const listDirNamesFromFTPDir = async (
   host: string,
-  dir: string
+  dir: string,
 ) => {
-  logDebug(`Getting directory names from ${host}...`);
+  log.debug(`Getting directory names from ${host}...`);
   try {
     const dirList = await listFTPDir(host, dir);
     return dirList.filter(fileObj => {
@@ -100,9 +74,9 @@ export const listDirNamesFromFTPDir = async (
 
 export const listFilesFromFTPDir = async (
   host: string,
-  dir: string
+  dir: string,
 ) => {
-  logDebug(`Getting list of files from ${host}${dir}`);
+  log.debug(`Getting list of files from ${host}${dir}`);
   try {
     const dirList = await listFTPDir(host, dir);
     return dirList.filter(fileObj => {
@@ -115,7 +89,7 @@ export const listFilesFromFTPDir = async (
 
 export const listFTPDir = async (
   host: string,
-  dir: string = '.'
+  dir: string = '.',
 ) => {
   const client = new ftp.Client();
   try {
@@ -125,7 +99,7 @@ export const listFTPDir = async (
       const {type, name} = obj;
       return {type, name};
     })
-    // logDebug({fileNames});
+    // log.debug({fileNames});
     await client.close();
     return fileNames;
   } catch (e) {
