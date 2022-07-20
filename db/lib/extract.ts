@@ -1,6 +1,6 @@
 import extract from 'extract-zip';
 import {FileObjList} from "../../types/general.js";
-import {getTmpDir} from "./filesystem.js";
+import {getTmpDir} from "../../lib/filesystem.js";
 
 export const unzipFile = async (
   fileName: string,

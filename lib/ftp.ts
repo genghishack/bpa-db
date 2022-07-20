@@ -1,5 +1,5 @@
 import ftp from "basic-ftp";
-import {getTmpDir} from "../db/lib/filesystem.js";
+import {getTmpDir} from "./filesystem.js";
 import {LayerOptions} from "../types/etl";
 
 export const getFileFromFTP = async (

@@ -1,5 +1,5 @@
 import execa from "execa";
-import {getTmpDir} from "./filesystem.js";
+import {getTmpDir} from "../../lib/filesystem.js";
 import {getGDALPGConnectionStr} from "../../lib/postgres.js";
 
 export const getLayerNamesFromGDBFile = async (filePath: string) => {

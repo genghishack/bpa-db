@@ -1,6 +1,6 @@
 import execa from "execa";
 import {getGDALPGConnectionStr} from "../../lib/postgres.js";
-import {fileExistsInTmpDir} from "./filesystem.js";
+import {fileExistsInTmpDir} from "../../lib/filesystem.js";
 
 export const loadFromGPKGFileToStaging = async (
   filePath: string,

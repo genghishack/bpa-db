@@ -1,5 +1,5 @@
 import execa from "execa";
-import {getTmpDir} from "./filesystem.js";
+import {getTmpDir} from "../../lib/filesystem.js";
 
 export const loadGeoTiffToStaging = async () => {
   const {module, layer, schema} = layerOpts;

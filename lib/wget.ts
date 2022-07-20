@@ -1,6 +1,6 @@
 import execa from "execa";
 import fs from "fs";
-import {getTmpDir, nullFn} from "../db/lib/filesystem.js";
+import {getTmpDir, nullFn} from "./filesystem.js";
 
 export const getHtml = async (
   url: string,

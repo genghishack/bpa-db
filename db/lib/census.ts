@@ -3,7 +3,7 @@ import {FileObjList} from "../../types/general.js";
 import {loadFromDBFToStagingTable, prepareStagingTableFromDBF} from "./dbf.js";
 import {getFiles, getHtml} from "../../lib/wget.js";
 import {unzipFiles} from "./extract.js";
-import {getFileNameFromDir, getTmpDir} from "./filesystem.js";
+import {getFileNameFromDir, getTmpDir} from "../../lib/filesystem.js";
 import {loadFromStagingToData} from "../sql/load.js";
 import {getLayerInstanceId, storeMetaDataInDB} from "../sql/metadata.js";
 import {createDataTables} from "./load.js";
