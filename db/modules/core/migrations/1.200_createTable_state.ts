@@ -76,6 +76,7 @@ export default {
            (53, 'Washington', 'WA', '53'),
            (54, 'West Virginia', 'WV', '54'),
            (55, 'Wisconsin', 'WI', '55'),
-           (56, 'Wyoming', 'WY', '56');
+           (56, 'Wyoming', 'WY', '56'),
+           (0, 'Continental United States', 'CUS', '00');
   `
 };
